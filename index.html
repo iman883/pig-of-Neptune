@@ -73,14 +73,16 @@ h1{
 /* 卡片 */
 .pig-card{
     background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(8px);
+    backdrop-filter:blur(10px);
     border-radius:25px;
 
-    padding:25px 30px;   /* 👈 变小卡片 */
-    max-width:380px;     /* 👈 控制宽度 */
-    width:90%;
+    padding:30px 40px;
+
+    width: min(90%, 520px);  /* 👈 关键：不会太窄，也适配手机 */
 
     box-shadow:0 10px 40px rgba(0,0,0,0.3);
+
+    text-align:center;
 }
 
 /* 猪 */
