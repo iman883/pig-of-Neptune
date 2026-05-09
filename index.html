@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🎂 生日快乐</title>
+<title>🎂 生日快乐 + 猪突猛进</title>
 
 <style>
 
@@ -22,7 +22,6 @@ body{
     justify-content:center;
     align-items:center;
     overflow:hidden;
-    position:relative;
 
     background:url("https://raw.githubusercontent.com/iman883/pig-of-Neptune/main/pig-space1.png")
     no-repeat center top;
@@ -52,8 +51,6 @@ body::before{
     border-radius:25px;
     padding:35px 45px;
 
-    width:min(90%,500px);
-
     text-align:center;
     color:white;
 }
@@ -64,8 +61,8 @@ h1{
 }
 
 .btn{
-    margin-top:20px;
-    padding:12px 28px;
+    margin:8px;
+    padding:12px 26px;
 
     border:none;
     border-radius:50px;
@@ -73,57 +70,39 @@ h1{
     background:white;
     color:#ff4f81;
 
-    font-size:16px;
     font-weight:bold;
     cursor:pointer;
-
-    margin:5px;
 }
 
 /* =====================
-   吃蛋糕动画
+   吃蛋糕动画（完全不动）
 ===================== */
 .overlay{
     position:fixed;
-    top:0;
-    left:0;
-
-    width:100%;
-    height:100%;
+    inset:0;
 
     display:none;
     justify-content:center;
     align-items:center;
 
     background:rgba(0,0,0,0.4);
-
     z-index:999;
 }
 
 .anim-box{
     text-align:center;
     color:white;
-    font-size:40px;
 }
 
 .girl{
     font-size:90px;
-    animation:floatGirl 3s ease-in-out infinite;
+    animation:float 3s ease-in-out infinite;
 }
 
-@keyframes floatGirl{
-
-    0%{
-        transform:translateY(0px);
-    }
-
-    50%{
-        transform:translateY(-12px);
-    }
-
-    100%{
-        transform:translateY(0px);
-    }
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-12px);}
+    100%{transform:translateY(0);}
 }
 
 .cake{
@@ -134,28 +113,22 @@ h1{
 .age{
     margin-top:20px;
     font-size:28px;
-
     opacity:0;
     transition:0.5s;
 }
 
 /* =====================
-   🐷 跑酷游戏
+   游戏
 ===================== */
 #game{
     position:fixed;
-    top:0;
-    left:0;
-
-    width:100%;
-    height:100%;
+    inset:0;
 
     display:none;
     justify-content:center;
     align-items:center;
 
     background:rgba(0,0,40,0.65);
-
     z-index:9999;
 }
 
@@ -165,21 +138,17 @@ h1{
     height:320px;
 
     background:rgba(255,255,255,0.12);
-
     border-radius:20px;
-
     position:relative;
     overflow:hidden;
 }
 
 #ui{
     position:absolute;
-    top:12px;
+    top:10px;
     width:100%;
-
     text-align:center;
     color:white;
-    font-size:18px;
 }
 
 /* 地面 */
@@ -188,7 +157,6 @@ h1{
     bottom:0;
     width:100%;
     height:50px;
-
     background:rgba(255,255,255,0.12);
 }
 
@@ -197,16 +165,14 @@ h1{
     position:absolute;
     left:80px;
     bottom:50px;
-
     font-size:55px;
 }
 
-/* 障碍 */
+/* 障碍（关键：left控制） */
 #obs{
     position:absolute;
-    right:-60px;
+    left:800px;
     bottom:50px;
-
     font-size:45px;
 }
 
@@ -216,18 +182,54 @@ h1{
 }
 
 @keyframes jump{
+    0%{bottom:50px;}
+    50%{bottom:170px;}
+    100%{bottom:50px;}
+}
 
-    0%{
-        bottom:50px;
-    }
+/* =====================
+   结算
+===================== */
+.result-screen{
+    position:fixed;
+    inset:0;
 
-    50%{
-        bottom:170px;
-    }
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    100%{
-        bottom:50px;
-    }
+    background:rgba(0,0,0,0.45);
+    z-index:999999;
+}
+
+.result-box{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+
+    padding:40px 50px;
+    border-radius:25px;
+
+    text-align:center;
+    color:white;
+}
+
+.result-title{
+    font-size:40px;
+    margin-bottom:10px;
+}
+
+.restart-btn{
+    margin-top:20px;
+    padding:10px 25px;
+
+    border:none;
+    border-radius:50px;
+
+    background:white;
+    color:#ff4f81;
+
+    font-weight:bold;
+    cursor:pointer;
 }
 
 </style>
@@ -236,33 +238,27 @@ h1{
 <body>
 
 <!-- =====================
-   主卡片
+   主界面（不动）
 ===================== -->
 <div class="card">
 
-    <h1>🐽 生日快乐 🎉</h1>
+    <h1>🐷 生日快乐 🎉</h1>
 
     <div class="cake">🎂</div>
 
-    <button class="btn" onclick="startAnim()">
-        吃蛋糕
-    </button>
-
-    <button class="btn" onclick="startGame()">
-        🐷 猪突猛进
-    </button>
+    <button class="btn" onclick="startAnim()">吃蛋糕</button>
+    <button class="btn" onclick="startGame()">🐷 猪突猛进</button>
 
 </div>
 
 <!-- =====================
-   吃蛋糕层
+   吃蛋糕（不动）
 ===================== -->
 <div class="overlay" id="overlay">
 
     <div class="anim-box">
 
         <div class="girl">👧</div>
-
         <div class="cake">🍰</div>
 
         <div class="age" id="ageText">
@@ -274,18 +270,15 @@ h1{
 </div>
 
 <!-- =====================
-   🐷 跑酷游戏
+   游戏
 ===================== -->
 <div id="game">
 
     <div class="box">
 
-        <div id="ui">
-            🐷 HP:10 ｜ 躲避:0/10
-        </div>
+        <div id="ui">HP:10 ｜ 躲避:0/10</div>
 
         <div id="pig">🐷</div>
-
         <div id="obs">🌵</div>
 
         <div class="ground"></div>
@@ -297,7 +290,7 @@ h1{
 <script>
 
 /* =====================
-   🎂 吃蛋糕动画
+   吃蛋糕（原样保留）
 ===================== */
 function startAnim(){
 
@@ -310,22 +303,18 @@ function startAnim(){
 
         ageText.style.opacity="1";
 
-        /* 💋 亲亲雨 */
         for(let i=0;i<25;i++){
 
             let kiss=document.createElement("div");
 
-            kiss.innerHTML=
-                Math.random()>0.5 ? "💋" : "😘";
+            kiss.innerHTML=Math.random()>0.5?"💋":"😘";
 
             kiss.style.position="fixed";
             kiss.style.left="50%";
             kiss.style.top="50%";
 
-            kiss.style.fontSize=
-                (20+Math.random()*30)+"px";
-
-            kiss.style.zIndex="9999";
+            kiss.style.fontSize=(20+Math.random()*30)+"px";
+            kiss.style.zIndex=9999;
 
             document.body.appendChild(kiss);
 
@@ -334,85 +323,75 @@ function startAnim(){
 
             setTimeout(()=>{
 
-                kiss.style.transition=
-                    "all 1.8s ease-out";
-
-                kiss.style.transform=
-                    `translate(${x}px,${y}px)`;
-
+                kiss.style.transition="all 1.8s ease-out";
+                kiss.style.transform=`translate(${x}px,${y}px)`;
                 kiss.style.opacity="0";
 
             },50);
 
-            setTimeout(()=>{
-                kiss.remove();
-            },1800);
+            setTimeout(()=>kiss.remove(),1800);
         }
 
     },1000);
 
     setTimeout(()=>{
-
         overlay.style.display="none";
         ageText.style.opacity="0";
-
     },3500);
 }
 
 /* =====================
-   🐷 跑酷游戏
+   游戏（完全修复版）
 ===================== */
 
 let hp=10;
 let count=0;
 
 let jumping=false;
-let gameStarted=false;
+let running=false;
 
-let obstacleX=700;
+/* ⭐ 关键：left控制 */
+let obsX=800;
+let speed=8;
+let timer;
 
-let gameLoopInterval;
+const list=["🌵","☄️","🪐","👾","🛰️","🌙"];
 
-/* =====================
-   开始游戏
-===================== */
+/* 随机障碍 */
+function randomObs(){
+    document.getElementById("obs").innerHTML =
+        list[Math.floor(Math.random()*list.length)];
+}
+
+/* 开始 */
 function startGame(){
 
     document.getElementById("game").style.display="flex";
 
     hp=10;
     count=0;
+    obsX=800;
+    speed=8;
 
-    obstacleX=700;
+    running=true;
 
-    gameStarted=true;
+    randomObs();
+    update();
 
-    updateUI();
-
-    const obs=document.getElementById("obs");
-    obs.style.right="-60px";
-
-    /* 防止重复开启 */
-    clearInterval(gameLoopInterval);
-
-    gameLoopInterval=setInterval(gameLoop,20);
+    clearInterval(timer);
+    timer=setInterval(loop,20);
 
     document.onkeydown=(e)=>{
-
-        if(e.code==="Space"){
-            jump();
-        }
+        if(e.code==="Space") jump();
     };
 
     document.getElementById("game").onclick=jump;
 }
 
-/* =====================
-   跳跃
-===================== */
+/* 跳跃 */
 function jump(){
 
-    if(jumping || !gameStarted) return;
+    if(jumping||!running) return;
 
     jumping=true;
 
@@ -421,112 +400,116 @@ function jump(){
     pig.classList.add("jump");
 
     setTimeout(()=>{
-
         pig.classList.remove("jump");
-
         jumping=false;
-
     },700);
 }
 
-/* =====================
-   游戏主循环
-===================== */
-function gameLoop(){
+/* 主循环（核心修复） */
+function loop(){
 
-    if(!gameStarted) return;
+    if(!running) return;
 
     const obs=document.getElementById("obs");
     const pig=document.getElementById("pig");
 
-    /* 障碍移动 */
-    obstacleX += 8;
+    /* 从右往左 */
+    obsX -= speed;
+    obs.style.left = obsX + "px";
 
-    obs.style.right=obstacleX+"px";
-
-    /* 获取位置 */
     const p=pig.getBoundingClientRect();
     const o=obs.getBoundingClientRect();
 
-    /* =====================
-       碰撞检测
-    ===================== */
-    let hit=
-
-        p.right > o.left+10 &&
-        p.left < o.right-10 &&
-        p.bottom > o.top+10;
+    /* 碰撞 */
+    let hit =
+        p.right>o.left+10 &&
+        p.left<o.right-10 &&
+        p.bottom>o.top+10;
 
     if(hit){
 
         hp--;
+        update();
 
-        updateUI();
+        obsX=800;
+        randomObs();
 
-        /* 重置障碍 */
-        obstacleX=-60;
-
-        if(hp<=0){
-
-            gameOver();
-        }
+        if(hp<=0) end(false);
 
         return;
     }
 
-    /* =====================
-       成功通过障碍
-    ===================== */
-    if(o.right < 0){
+    /* 成功通过（关键修复） */
+    if(obsX < -80){
 
         count++;
+        update();
 
-        updateUI();
+        obsX=800;
+        randomObs();
 
-        obstacleX=-60;
-
-        if(count>=10){
-
-            winGame();
-        }
+        if(count>=10) end(true);
     }
 }
 
-/* =====================
-   UI更新
-===================== */
-function updateUI(){
-
-    document.getElementById("ui").innerText=
-        `🐷 HP:${hp} ｜ 躲避:${count}/10`;
+/* UI */
+function update(){
+    document.getElementById("ui").innerText =
+        `HP:${hp} ｜ 躲避:${count}/10`;
 }
 
-/* =====================
-   游戏失败
-===================== */
-function gameOver(){
+/* 结算 */
+function end(win){
 
-    gameStarted=false;
+    running=false;
+    clearInterval(timer);
 
-    clearInterval(gameLoopInterval);
+    let screen=document.createElement("div");
+    screen.className="result-screen";
 
-    alert("💥 小猪被创飞啦！");
+    screen.innerHTML=`
+        <div class="result-box">
 
-    location.reload();
-}
+            <div class="result-title">
+                ${win?"🎉 老公真棒！(～￣▽￣)～":"💥 别灰心，在猪里也算天才！(ToT)/~~~"}
+            </div>
 
-/* =====================
-   游戏胜利
-===================== */
-function winGame(){
+            <button class="restart-btn"
+                onclick="location.reload()">
+                再来
+            </button>
 
-    gameStarted=false;
+        </div>
+    `;
 
-    clearInterval(gameLoopInterval);
+    document.body.appendChild(screen);
 
-    alert("🎉 小猪旅行成功！");
+    for(let i=0;i<(win?80:40);i++){
 
-    location.reload();
+        let e=document.createElement("div");
+
+        e.innerHTML=win?"✨":"💥";
+
+        e.style.position="fixed";
+        e.style.left="50%";
+        e.style.top="50%";
+        e.style.fontSize="24px";
+
+        document.body.appendChild(e);
+
+        let x=(Math.random()-0.5)*1000;
+        let y=(Math.random()-0.5)*700;
+
+        setTimeout(()=>{
+
+            e.style.transition="all 2s ease-out";
+            e.style.transform=`translate(${x}px,${y}px)`;
+            e.style.opacity="0";
+
+        },50);
+
+        setTimeout(()=>e.remove(),2000);
+    }
 }
 
 </script>
