@@ -7,13 +7,15 @@
 
 <style>
 
+/* =====================
+   基础
+===================== */
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-/* ===== 背景 ===== */
 body{
     height:100vh;
     display:flex;
@@ -24,8 +26,8 @@ body{
 
     background:url("https://raw.githubusercontent.com/iman883/pig-of-Neptune/main/pig-space1.png")
     no-repeat center top;
-    background-size:cover;
 
+    background-size:cover;
     font-family:"Microsoft YaHei",sans-serif;
 }
 
@@ -37,7 +39,9 @@ body::before{
     background:rgba(0,0,0,0.15);
 }
 
-/* ===== 卡片 ===== */
+/* =====================
+   卡片
+===================== */
 .card{
     position:relative;
     z-index:2;
@@ -51,7 +55,6 @@ body::before{
     width:min(90%,500px);
 
     text-align:center;
-
     color:white;
 }
 
@@ -60,10 +63,10 @@ h1{
     margin-bottom:20px;
 }
 
-/* 按钮 */
 .btn{
     margin-top:20px;
     padding:12px 28px;
+
     border:none;
     border-radius:50px;
 
@@ -73,14 +76,18 @@ h1{
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
+
     margin:5px;
 }
 
-/* ===== 吃蛋糕层 ===== */
+/* =====================
+   吃蛋糕动画
+===================== */
 .overlay{
     position:fixed;
     top:0;
     left:0;
+
     width:100%;
     height:100%;
 
@@ -89,6 +96,7 @@ h1{
     align-items:center;
 
     background:rgba(0,0,0,0.4);
+
     z-index:999;
 }
 
@@ -98,100 +106,128 @@ h1{
     font-size:40px;
 }
 
+.girl{
+    font-size:90px;
+    animation:floatGirl 3s ease-in-out infinite;
+}
+
+@keyframes floatGirl{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+}
+
 .cake{
     font-size:80px;
     margin-top:10px;
 }
 
-/* 👧 宇宙漂浮 girl */
-.girl{
-    font-size:90px;
-    margin:10px 0;
-
-    animation:floatGirl 3s ease-in-out infinite;
-    display:inline-block;
-}
-
-@keyframes floatGirl{
-
-    0%{ transform:translateY(0px); }
-    25%{ transform:translateY(-12px); }
-    50%{ transform:translateY(0px); }
-    75%{ transform:translateY(12px); }
-    100%{ transform:translateY(0px); }
-
-}
-
 .age{
     margin-top:20px;
     font-size:28px;
+
     opacity:0;
     transition:0.5s;
 }
 
-/* =========================
+/* =====================
    🐷 跑酷游戏
-========================= */
+===================== */
 #game{
     position:fixed;
     top:0;
     left:0;
+
     width:100%;
     height:100%;
+
     display:none;
     justify-content:center;
     align-items:center;
-    background:rgba(0,0,40,0.6);
+
+    background:rgba(0,0,40,0.65);
+
     z-index:9999;
 }
 
 .box{
     width:90%;
-    max-width:600px;
-    height:300px;
+    max-width:700px;
+    height:320px;
+
     background:rgba(255,255,255,0.12);
+
     border-radius:20px;
+
     position:relative;
     overflow:hidden;
 }
 
+#ui{
+    position:absolute;
+    top:12px;
+    width:100%;
+
+    text-align:center;
+    color:white;
+    font-size:18px;
+}
+
+/* 地面 */
+.ground{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:50px;
+
+    background:rgba(255,255,255,0.12);
+}
+
+/* 猪 */
 #pig{
     position:absolute;
-    bottom:20px;
-    left:50px;
-    font-size:50px;
+    left:80px;
+    bottom:50px;
+
+    font-size:55px;
 }
 
+/* 障碍 */
 #obs{
     position:absolute;
-    bottom:20px;
-    right:-50px;
-    font-size:40px;
-    animation:run 2s linear infinite;
+    right:-60px;
+    bottom:50px;
+
+    font-size:45px;
 }
 
-@keyframes run{
-    from{right:-50px;}
-    to{right:700px;}
-}
-
+/* 跳跃 */
 .jump{
-    animation:jump 0.6s ease;
+    animation:jump 0.7s ease;
 }
 
 @keyframes jump{
-    0%{bottom:20px;}
-    50%{bottom:130px;}
-    100%{bottom:20px;}
-}
 
-#ui{
-    position:absolute;
-    top:10px;
-    width:100%;
-    text-align:center;
-    color:white;
-    font-size:16px;
+    0%{
+        bottom:50px;
+    }
+
+    50%{
+        bottom:170px;
+    }
+
+    100%{
+        bottom:50px;
+    }
 }
 
 </style>
@@ -199,23 +235,34 @@ h1{
 
 <body>
 
-<!-- ===== 生日主卡片（不动） ===== -->
+<!-- =====================
+   主卡片
+===================== -->
 <div class="card">
 
     <h1>🐽 生日快乐 🎉</h1>
 
     <div class="cake">🎂</div>
 
-    <button class="btn" onclick="startAnim()">吃蛋糕</button>
-    <button class="btn" onclick="startGame()">🐷猪突猛进</button>
+    <button class="btn" onclick="startAnim()">
+        吃蛋糕
+    </button>
+
+    <button class="btn" onclick="startGame()">
+        🐷 猪突猛进
+    </button>
 
 </div>
 
-<!-- ===== 吃蛋糕动画（不动） ===== -->
+<!-- =====================
+   吃蛋糕层
+===================== -->
 <div class="overlay" id="overlay">
+
     <div class="anim-box">
 
         <div class="girl">👧</div>
+
         <div class="cake">🍰</div>
 
         <div class="age" id="ageText">
@@ -223,29 +270,35 @@ h1{
         </div>
 
     </div>
+
 </div>
 
-<!-- =========================
+<!-- =====================
    🐷 跑酷游戏
-========================= -->
+===================== -->
 <div id="game">
 
-<div class="box">
+    <div class="box">
 
-    <div id="ui">🐷 HP:10 ｜ 躲避10个障碍胜利</div>
+        <div id="ui">
+            🐷 HP:10 ｜ 躲避:0/10
+        </div>
 
-    <div id="pig">🐷</div>
-    <div id="obs">🪨</div>
+        <div id="pig">🐷</div>
 
-</div>
+        <div id="obs">🪨</div>
+
+        <div class="ground"></div>
+
+    </div>
 
 </div>
 
 <script>
 
-/* =========================
-   🎂 吃蛋糕 + 亲亲特效
-========================= */
+/* =====================
+   🎂 吃蛋糕动画
+===================== */
 function startAnim(){
 
     const overlay=document.getElementById("overlay");
@@ -257,16 +310,21 @@ function startAnim(){
 
         ageText.style.opacity="1";
 
-        // 💋 亲亲雨（只在这里触发）
+        /* 💋 亲亲雨 */
         for(let i=0;i<25;i++){
 
             let kiss=document.createElement("div");
-            kiss.innerHTML=Math.random()>0.5?"💋":"😘";
+
+            kiss.innerHTML=
+                Math.random()>0.5 ? "💋" : "😘";
 
             kiss.style.position="fixed";
             kiss.style.left="50%";
             kiss.style.top="50%";
-            kiss.style.fontSize=(20+Math.random()*30)+"px";
+
+            kiss.style.fontSize=
+                (20+Math.random()*30)+"px";
+
             kiss.style.zIndex="9999";
 
             document.body.appendChild(kiss);
@@ -275,139 +333,202 @@ function startAnim(){
             let y=(Math.random()-0.5)*600;
 
             setTimeout(()=>{
-                kiss.style.transition="all 1.8s ease-out";
-                kiss.style.transform=`translate(${x}px,${y}px)`;
+
+                kiss.style.transition=
+                    "all 1.8s ease-out";
+
+                kiss.style.transform=
+                    `translate(${x}px,${y}px)`;
+
                 kiss.style.opacity="0";
+
             },50);
 
-            setTimeout(()=>kiss.remove(),1800);
+            setTimeout(()=>{
+                kiss.remove();
+            },1800);
         }
 
     },1000);
 
     setTimeout(()=>{
+
         overlay.style.display="none";
         ageText.style.opacity="0";
+
     },3500);
 }
 
-/* =========================
+/* =====================
    🐷 跑酷游戏
-========================= */
+===================== */
 
-let hp = 10;
-let count = 0;
-let jumping = false;
-let gameStarted = false;
-let gameInterval = null;
+let hp=10;
+let count=0;
 
+let jumping=false;
+let gameStarted=false;
+
+let obstacleX=700;
+
+let gameLoopInterval;
+
+/* =====================
+   开始游戏
+===================== */
 function startGame(){
 
     document.getElementById("game").style.display="flex";
 
-    hp = 10;
-    count = 0;
-    gameStarted = true;
+    hp=10;
+    count=0;
 
-    update();
+    obstacleX=700;
 
-    document.onkeydown = (e)=>{
-        if(e.code==="Space") jump();
+    gameStarted=true;
+
+    updateUI();
+
+    const obs=document.getElementById("obs");
+    obs.style.right="-60px";
+
+    /* 防止重复开启 */
+    clearInterval(gameLoopInterval);
+
+    gameLoopInterval=setInterval(gameLoop,20);
+
+    document.onkeydown=(e)=>{
+
+        if(e.code==="Space"){
+            jump();
+        }
     };
 
-    document.getElementById("game").onclick = jump;
-
-    /* ❗关键：防止重复开循环 */
-    if(gameInterval) clearInterval(gameInterval);
-
-    gameInterval = setInterval(loop, 50);
+    document.getElementById("game").onclick=jump;
 }
 
-/* =========================
-   🐷 跳跃
-========================= */
+/* =====================
+   跳跃
+===================== */
 function jump(){
 
     if(jumping || !gameStarted) return;
 
-    let pig=document.getElementById("pig");
-
     jumping=true;
+
+    const pig=document.getElementById("pig");
+
     pig.classList.add("jump");
 
     setTimeout(()=>{
+
         pig.classList.remove("jump");
+
         jumping=false;
-    },600);
+
+    },700);
 }
 
-/* =========================
-   🎮 核心逻辑（修复版）
-========================= */
-function loop(){
+/* =====================
+   游戏主循环
+===================== */
+function gameLoop(){
 
-    let pig=document.getElementById("pig");
-    let obs=document.getElementById("obs");
+    if(!gameStarted) return;
 
-    let p = pig.getBoundingClientRect();
-    let o = obs.getBoundingClientRect();
+    const obs=document.getElementById("obs");
+    const pig=document.getElementById("pig");
 
-    /* ======================
-       ❗更严格碰撞判定（修复误判）
-    ====================== */
-    let hit =
-        p.right > o.left + 10 &&
-        p.left < o.right - 10 &&
-        p.bottom > o.top + 10 &&
-        p.top < o.bottom - 10;
+    /* 障碍移动 */
+    obstacleX += 8;
+
+    obs.style.right=obstacleX+"px";
+
+    /* 获取位置 */
+    const p=pig.getBoundingClientRect();
+    const o=obs.getBoundingClientRect();
+
+    /* =====================
+       碰撞检测
+    ===================== */
+    let hit=
+
+        p.right > o.left+10 &&
+        p.left < o.right-10 &&
+        p.bottom > o.top+10;
 
     if(hit){
 
         hp--;
-        update();
 
-        if(hp <= 0){
+        updateUI();
+
+        /* 重置障碍 */
+        obstacleX=-60;
+
+        if(hp<=0){
+
             gameOver();
         }
 
-        /* ❗防止连续扣血 */
-        obs.style.right = "-50px";
         return;
     }
 
-    /* ======================
-       🏁 通过判定（稳定）
-    ====================== */
+    /* =====================
+       成功通过障碍
+    ===================== */
     if(o.right < 0){
 
         count++;
-        update();
 
-        if(count >= 10){
+        updateUI();
+
+        obstacleX=-60;
+
+        if(count>=10){
+
             winGame();
         }
-
-        obs.style.right = "-50px";
     }
 }
 
-/* =========================
-   UI
-========================= */
-function update(){
-    document.getElementById("ui").innerText =
-    `🐷 HP:${hp} ｜ 躲避:${count}/10`;
+/* =====================
+   UI更新
+===================== */
+function updateUI(){
+
+    document.getElementById("ui").innerText=
+        `🐷 HP:${hp} ｜ 躲避:${count}/10`;
 }
 
+/* =====================
+   游戏失败
+===================== */
 function gameOver(){
-    alert("💥 游戏失败（烤乳猪）");
+
+    gameStarted=false;
+
+    clearInterval(gameLoopInterval);
+
+    alert("💥 小猪被创飞啦！");
+
     location.reload();
 }
 
+/* =====================
+   游戏胜利
+===================== */
 function winGame(){
-    alert("🎉 通关成功！");
+
+    gameStarted=false;
+
+    clearInterval(gameLoopInterval);
+
+    alert("🎉 小猪旅行成功！");
+
     location.reload();
 }
+
 </script>
 
 </body>
