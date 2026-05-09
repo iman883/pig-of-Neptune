@@ -7,14 +7,14 @@
 
 <style>
 
-/* 基础重置 */
+/* 基础 */
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-/* 背景 */
+/* 背景（关键已修复） */
 body{
     height:100vh;
     overflow:hidden;
@@ -22,15 +22,16 @@ body{
     justify-content:center;
     align-items:center;
 
-    /* ⭐这里换成你的图片文件名 */
-    background:url("pig-space.png") no-repeat center center;
+    background:url("https://raw.githubusercontent.com/iman883/pig-of-Neptune/main/pig-space.png") 
+    no-repeat center center;
+
     background-size:cover;
 
     font-family:"Microsoft YaHei",sans-serif;
     position:relative;
 }
 
-/* 半透明遮罩，让文字更清晰 */
+/* 遮罩，让文字清晰 */
 body::before{
     content:"";
     position:absolute;
@@ -42,7 +43,7 @@ body::before{
     z-index:0;
 }
 
-/* 猪猪背景 */
+/* 漂浮猪背景 */
 .pig-bg{
     position:absolute;
     width:100%;
@@ -59,12 +60,8 @@ body::before{
 }
 
 @keyframes floatPig{
-    from{
-        transform:translateY(110vh) rotate(0deg);
-    }
-    to{
-        transform:translateY(-20vh) rotate(360deg);
-    }
+    from{transform:translateY(110vh) rotate(0deg);}
+    to{transform:translateY(-20vh) rotate(360deg);}
 }
 
 /* 主体 */
@@ -73,7 +70,6 @@ body::before{
     z-index:2;
     text-align:center;
     color:white;
-    animation:fadeIn 2s ease;
 }
 
 /* 标题 */
@@ -82,12 +78,6 @@ h1{
     margin-bottom:20px;
     text-shadow:0 0 20px rgba(255,255,255,0.8);
     animation:float 3s ease-in-out infinite;
-}
-
-/* 副标题 */
-.subtitle{
-    font-size:24px;
-    margin-bottom:30px;
 }
 
 /* 卡片 */
@@ -117,33 +107,9 @@ h1{
     font-size:18px;
     cursor:pointer;
     font-weight:bold;
-    transition:0.3s;
-}
-
-.btn:hover{
-    transform:scale(1.1);
-}
-
-/* 爱心 */
-.heart{
-    position:absolute;
-    color:pink;
-    animation:rise linear infinite;
-    user-select:none;
 }
 
 /* 动画 */
-@keyframes rise{
-    from{
-        transform:translateY(100vh) scale(0.5);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-10vh) scale(1.5);
-        opacity:0;
-    }
-}
-
 @keyframes bounce{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(-10px);}
@@ -154,11 +120,6 @@ h1{
     50%{transform:translateY(-8px);}
 }
 
-@keyframes fadeIn{
-    from{opacity:0; transform:scale(0.9);}
-    to{opacity:1; transform:scale(1);}
-}
-
 </style>
 </head>
 
@@ -167,7 +128,7 @@ h1{
 <!-- 漂浮猪 -->
 <div class="pig-bg"></div>
 
-<!-- 主体 -->
+<!-- 内容 -->
 <div class="container">
 
     <div class="pig-card">
@@ -176,13 +137,9 @@ h1{
 
         <div class="pig-face">🐷</div>
 
-        <div class="subtitle">
-            祝你永远快乐的小猪猪 💖
-        </div>
+        <div>祝你永远开心的小猪猪 💖</div>
 
-        <button class="btn" onclick="showMessage()">
-            点击领取祝福
-        </button>
+        <button class="btn">生日快乐！</button>
 
     </div>
 
@@ -190,10 +147,10 @@ h1{
 
 <script>
 
-/* 漂浮小猪 */
+/* 漂浮猪 */
 const pigBg=document.querySelector(".pig-bg");
 
-for(let i=0;i<25;i++){
+for(let i=0;i<20;i++){
 
     const pig=document.createElement("div");
     pig.className="pig";
@@ -205,47 +162,6 @@ for(let i=0;i<25;i++){
     pig.style.animationDelay=Math.random()*5+"s";
 
     pigBg.appendChild(pig);
-}
-
-/* 漂浮爱心 */
-for(let i=0;i<20;i++){
-
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.fontSize=(15+Math.random()*25)+"px";
-    heart.style.animationDuration=(4+Math.random()*5)+"s";
-    heart.style.animationDelay=Math.random()*5+"s";
-
-    document.body.appendChild(heart);
-}
-
-/* 点击祝福 */
-function showMessage(){
-
-    const box=document.createElement("div");
-    box.innerHTML="💖 生日快乐小猪猪！永远开心！ 💖";
-
-    box.style.position="fixed";
-    box.style.left="50%";
-    box.style.top="50%";
-    box.style.transform="translate(-50%,-50%)";
-    box.style.background="rgba(255,105,180,0.9)";
-    box.style.color="white";
-    box.style.padding="25px 40px";
-    box.style.borderRadius="25px";
-    box.style.fontSize="28px";
-    box.style.zIndex="9999";
-    box.style.transition="0.5s";
-
-    document.body.appendChild(box);
-
-    setTimeout(()=>{
-        box.style.opacity="0";
-        setTimeout(()=>box.remove(),500);
-    },2500);
 }
 
 </script>
