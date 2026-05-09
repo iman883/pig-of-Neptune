@@ -179,21 +179,99 @@ function startAnim(){
     const overlay=document.getElementById("overlay");
     const ageText=document.getElementById("ageText");
 
-    // 显示动画层
+    // 显示动画层（猪吃蛋糕）
     overlay.style.display="flex";
 
-    // 延迟显示 +1岁
+    // =========================
+    // 🎉 +1岁提示
+    // =========================
     setTimeout(()=>{
         ageText.style.opacity="1";
+    },1000);
+
+    // =========================
+    // 💖 亲亲特效（你给的代码精简版融合）
+    // =========================
+    setTimeout(()=>{
+
+        // 创建主亲亲文字
+        const kiss=document.createElement("div");
+
+        kiss.innerHTML="😘💋 啵啵小猪猪！生日快乐 +1岁！ 💖";
+
+        kiss.style.position="fixed";
+        kiss.style.left="50%";
+        kiss.style.top="50%";
+        kiss.style.transform="translate(-50%,-50%) scale(0.5)";
+        kiss.style.fontSize="40px";
+        kiss.style.fontWeight="bold";
+        kiss.style.color="white";
+        kiss.style.padding="25px 40px";
+        kiss.style.borderRadius="30px";
+        kiss.style.background="rgba(255,105,180,0.85)";
+        kiss.style.backdropFilter="blur(10px)";
+        kiss.style.boxShadow="0 10px 40px rgba(0,0,0,0.25)";
+        kiss.style.zIndex="9999";
+        kiss.style.opacity="0";
+        kiss.style.transition="all 0.6s ease";
+
+        document.body.appendChild(kiss);
+
+        // 出现动画
+        setTimeout(()=>{
+            kiss.style.opacity="1";
+            kiss.style.transform="translate(-50%,-50%) scale(1)";
+        },50);
+
+        // =========================
+        // 💋 漂浮亲亲
+        // =========================
+        for(let i=0;i<20;i++){
+
+            const kissEmoji=document.createElement("div");
+
+            kissEmoji.innerHTML = Math.random()>0.5 ? "💋" : "😘";
+
+            kissEmoji.style.position="fixed";
+            kissEmoji.style.left="50%";
+            kissEmoji.style.top="50%";
+            kissEmoji.style.fontSize=(20+Math.random()*30)+"px";
+            kissEmoji.style.zIndex="9999";
+            kissEmoji.style.transition="all 2s ease-out";
+
+            document.body.appendChild(kissEmoji);
+
+            const x=(Math.random()-0.5)*700;
+            const y=(Math.random()-0.5)*500;
+
+            setTimeout(()=>{
+                kissEmoji.style.transform=
+                    `translate(${x}px,${y}px) scale(2)`;
+                kissEmoji.style.opacity="0";
+            },50);
+
+            setTimeout(()=>{
+                kissEmoji.remove();
+            },2000);
+        }
+
+        // 主文字消失
+        setTimeout(()=>{
+            kiss.style.opacity="0";
+            kiss.style.transform="translate(-50%,-50%) scale(0.5)";
+            setTimeout(()=>kiss.remove(),600);
+        },2500);
+
     },1200);
 
-    // 3秒后关闭
+    // =========================
+    // ⏳ 自动关闭动画层
+    // =========================
     setTimeout(()=>{
         overlay.style.display="none";
         ageText.style.opacity="0";
-    },3000);
+    },3500);
 }
-
 </script>
 
 </body>
