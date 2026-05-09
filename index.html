@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小猪生日快乐</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#ffb6c1,#ffd1dc,#ffc0cb,#ffe4ec);
+    font-family:"Microsoft YaHei",sans-serif;
+    position:relative;
+}
+
+/* 猪猪背景泡泡 */
+
+.pig-bg{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.pig{
+    position:absolute;
+    font-size:35px;
+    opacity:0.25;
+    animation:floatPig linear infinite;
+}
+
+@keyframes floatPig{
+    from{
+        transform:translateY(110vh) rotate(0deg);
+    }
+    to{
+        transform:translateY(-20vh) rotate(360deg);
+    }
+}
+
+/* 主体 */
+
+.container{
+    position:relative;
+    z-index:2;
+    text-align:center;
+    color:white;
+    animation:fadeIn 2s ease;
+}
+
+h1{
+    font-size:72px;
+    margin-bottom:20px;
+    text-shadow:0 0 20px rgba(255,255,255,0.9);
+    animation:float 3s ease-in-out infinite;
+}
+
+/* 祝福语 */
+
+.subtitle{
+    font-size:28px;
+    margin-bottom:30px;
+    color:white;
+    text-shadow:0 0 10px rgba(255,255,255,0.6);
+}
+
+/* 小猪卡片 */
+
+.pig-card{
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    border:2px solid rgba(255,255,255,0.3);
+    border-radius:30px;
+    padding:40px;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15);
+}
+
+/* 猪猪头像 */
+
+.pig-face{
+    font-size:100px;
+    margin-bottom:20px;
+    animation:bounce 2s infinite;
+}
+
+/* 按钮 */
+
+.btn{
+    margin-top:25px;
+    padding:15px 38px;
+    border:none;
+    border-radius:50px;
+    background:white;
+    color:#ff4f81;
+    font-size:20px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn:hover{
+    transform:scale(1.1);
+    background:#fff0f5;
+}
+
+/* 爱心 */
+
+.heart{
+    position:absolute;
+    color:rgba(255,255,255,0.7);
+    animation:rise linear infinite;
+    user-select:none;
+}
+
+@keyframes rise{
+    from{
+        transform:translateY(100vh) scale(0.5);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-10vh) scale(1.5);
+        opacity:0;
+    }
+}
+
+/* 动画 */
+
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:scale(0.8);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 猪猪背景 -->
+<div class="pig-bg"></div>
+
+<!-- 主体 -->
+<div class="container">
+
+    <div class="pig-card">
+
+        <h1>🐷 生日快乐 🎂</h1>
+
+        <div class="pig-face">
+            🐷
+        </div>
+
+        <div class="subtitle">
+            祝你做世界上最快乐的小猪猪 🐷🎂
+        </div>
+
+        <button class="btn" onclick="showMessage()">
+            点击领取小猪祝福
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+/* 漂浮小猪 */
+
+const pigBg=document.querySelector('.pig-bg');
+
+for(let i=0;i<30;i++){
+
+    const pig=document.createElement('div');
+
+    pig.className='pig';
+
+    pig.innerHTML='🐷';
+
+    pig.style.left=Math.random()*100+'vw';
+
+    pig.style.fontSize=
+        (25+Math.random()*35)+'px';
+
+    pig.style.animationDuration=
+        (6+Math.random()*8)+'s';
+
+    pig.style.animationDelay=
+        Math.random()*5+'s';
+
+    pigBg.appendChild(pig);
+}
+
+/* 漂浮爱心 */
+
+for(let i=0;i<25;i++){
+
+    const heart=document.createElement('div');
+
+    heart.className='heart';
+
+    heart.innerHTML='💖';
+
+    heart.style.left=Math.random()*100+'vw';
+
+    heart.style.fontSize=
+        (15+Math.random()*30)+'px';
+
+    heart.style.animationDuration=
+        (4+Math.random()*5)+'s';
+
+    heart.style.animationDelay=
+        Math.random()*5+'s';
+
+    document.body.appendChild(heart);
+}
+
+/* 按钮祝福 */
+
+function showMessage(){
+
+    /* 创建亲亲文字 */
+
+    const kiss=document.createElement("div");
+
+    kiss.innerHTML="😘💋 啵啵小猪猪！生日快乐！ 💖";
+
+    kiss.style.position="fixed";
+    kiss.style.left="50%";
+    kiss.style.top="50%";
+    kiss.style.transform="translate(-50%,-50%) scale(0.5)";
+    kiss.style.fontSize="42px";
+    kiss.style.fontWeight="bold";
+    kiss.style.color="white";
+    kiss.style.padding="25px 40px";
+    kiss.style.borderRadius="30px";
+    kiss.style.background="rgba(255,105,180,0.85)";
+    kiss.style.backdropFilter="blur(10px)";
+    kiss.style.boxShadow="0 10px 40px rgba(0,0,0,0.25)";
+    kiss.style.zIndex="9999";
+    kiss.style.opacity="0";
+    kiss.style.transition="all 0.6s ease";
+
+    document.body.appendChild(kiss);
+
+    /* 动画出现 */
+
+    setTimeout(()=>{
+
+        kiss.style.opacity="1";
+        kiss.style.transform=
+            "translate(-50%,-50%) scale(1)";
+
+    },50);
+
+    /* 漂浮亲亲 */
+
+    for(let i=0;i<20;i++){
+
+        const kissEmoji=document.createElement("div");
+
+        kissEmoji.innerHTML=
+            Math.random()>0.5 ? "💋" : "😘";
+
+        kissEmoji.style.position="fixed";
+
+        kissEmoji.style.left="50%";
+        kissEmoji.style.top="50%";
+
+        kissEmoji.style.fontSize=
+            (20+Math.random()*30)+"px";
+
+        kissEmoji.style.zIndex="9999";
+
+        kissEmoji.style.transition="all 2s ease-out";
+
+        document.body.appendChild(kissEmoji);
+
+        const x=(Math.random()-0.5)*700;
+        const y=(Math.random()-0.5)*500;
+
+        setTimeout(()=>{
+
+            kissEmoji.style.transform=
+                `translate(${x}px,${y}px) scale(2)`;
+
+            kissEmoji.style.opacity="0";
+
+        },50);
+
+        setTimeout(()=>{
+
+            kissEmoji.remove();
+
+        },2000);
+    }
+
+    /* 自动消失 */
+
+    setTimeout(()=>{
+
+        kiss.style.opacity="0";
+        kiss.style.transform=
+            "translate(-50%,-50%) scale(0.5)";
+
+        setTimeout(()=>{
+
+            kiss.remove();
+
+        },600);
+
+    },2500);
+
+}
+
+</script>
+
+</body>
+</html>
