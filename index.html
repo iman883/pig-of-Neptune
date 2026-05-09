@@ -295,31 +295,40 @@ function startAnim(){
    🐷 跑酷游戏
 ========================= */
 
-let hp=10;
-let count=0;
-let jumping=false;
+let hp = 10;
+let count = 0;
+let jumping = false;
+let gameStarted = false;
+let gameInterval = null;
 
 function startGame(){
 
     document.getElementById("game").style.display="flex";
 
-    hp=10;
-    count=0;
+    hp = 10;
+    count = 0;
+    gameStarted = true;
 
     update();
 
-    document.onkeydown=(e)=>{
+    document.onkeydown = (e)=>{
         if(e.code==="Space") jump();
     };
 
-    document.getElementById("game").onclick=jump;
+    document.getElementById("game").onclick = jump;
 
-    loop();
+    /* ❗关键：防止重复开循环 */
+    if(gameInterval) clearInterval(gameInterval);
+
+    gameInterval = setInterval(loop, 50);
 }
 
+/* =========================
+   🐷 跳跃
+========================= */
 function jump(){
 
-    if(jumping) return;
+    if(jumping || !gameStarted) return;
 
     let pig=document.getElementById("pig");
 
@@ -332,66 +341,73 @@ function jump(){
     },600);
 }
 
+/* =========================
+   🎮 核心逻辑（修复版）
+========================= */
 function loop(){
 
     let pig=document.getElementById("pig");
     let obs=document.getElementById("obs");
 
-    let hitLock=false;
-    let passed=false;
-    let countedHit=false;   // ✅ 新增：是否已经扣过血
+    let p = pig.getBoundingClientRect();
+    let o = obs.getBoundingClientRect();
 
-    setInterval(()=>{
+    /* ======================
+       ❗更严格碰撞判定（修复误判）
+    ====================== */
+    let hit =
+        p.right > o.left + 10 &&
+        p.left < o.right - 10 &&
+        p.bottom > o.top + 10 &&
+        p.top < o.bottom - 10;
 
-        let p=pig.getBoundingClientRect();
-        let o=obs.getBoundingClientRect();
+    if(hit){
 
-        let hit =
-            o.left < p.right &&
-            o.right > p.left &&
-            o.bottom > p.top;
+        hp--;
+        update();
 
-        /* ======================
-           ❗扣血：只允许一次
-        ====================== */
-        if(hit && !countedHit){
-
-            countedHit = true;   // 🔥 关键：锁死本轮
-
-            hp--;
-            update();
-
-            if(hp<=0){
-                alert("💥 游戏失败");
-                location.reload();
-            }
+        if(hp <= 0){
+            gameOver();
         }
 
-        /* ======================
-           🧠 通过计数（只算一次）
-        ====================== */
-        if(!passed && o.right < p.left){
+        /* ❗防止连续扣血 */
+        obs.style.right = "-50px";
+        return;
+    }
 
-            passed = true;
-            countedHit = false; // 🔥 新障碍重置扣血权限
+    /* ======================
+       🏁 通过判定（稳定）
+    ====================== */
+    if(o.right < 0){
 
-            count++;
-            update();
+        count++;
+        update();
 
-            if(count>=10){
-                alert("🎉 通关成功！");
-                location.reload();
-            }
+        if(count >= 10){
+            winGame();
         }
 
-    },100);
+        obs.style.right = "-50px";
+    }
 }
 
+/* =========================
+   UI
+========================= */
 function update(){
-    document.getElementById("ui").innerText=
+    document.getElementById("ui").innerText =
     `🐷 HP:${hp} ｜ 躲避:${count}/10`;
 }
 
+function gameOver(){
+    alert("💥 游戏失败（烤乳猪）");
+    location.reload();
+}
+
+function winGame(){
+    alert("🎉 通关成功！");
+    location.reload();
+}
 </script>
 
 </body>
