@@ -2,168 +2,240 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>小猪生日快乐</title>
+<title>小猪星际生日宇宙</title>
 
 <style>
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
+/* =========================
+   🌌 全局背景（统一深蓝，不用黑）
+========================= */
 body{
+    margin:0;
     height:100vh;
     overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:linear-gradient(135deg,#ffb6c1,#ffd1dc,#ffc0cb,#ffe4ec);
-    font-family:"Microsoft YaHei",sans-serif;
-    position:relative;
+    font-family:sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 20%, #2a3f7a 0%, transparent 45%),
+        radial-gradient(circle at 80% 60%, #243a6b 0%, transparent 50%),
+        linear-gradient(180deg,#1b2b55,#162244,#1a2a4d);
+
+    color:white;
 }
 
-/* 猪猪背景泡泡 */
-
-.pig-bg{
+/* =========================
+   ✨ 星云柔光层
+========================= */
+.nebula{
     position:absolute;
     width:100%;
     height:100%;
-    overflow:hidden;
+    background:
+        radial-gradient(circle at 30% 40%, rgba(120,160,255,0.18), transparent 55%),
+        radial-gradient(circle at 70% 70%, rgba(255,140,200,0.10), transparent 60%);
+    filter:blur(60px);
 }
 
+/* =========================
+   ✨ 星星层（柔和蓝白）
+========================= */
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:rgba(255,255,255,0.8);
+    border-radius:50%;
+    animation:twinkle 2.5s infinite alternate;
+}
+
+@keyframes twinkle{
+    from{opacity:0.2;transform:scale(0.8);}
+    to{opacity:1;transform:scale(1.4);}
+}
+
+/* =========================
+   🌍 星球（蓝紫渐变）
+========================= */
+.planet{
+    position:absolute;
+    width:260px;
+    height:260px;
+    border-radius:50%;
+    left:50%;
+    bottom:120px;
+    transform:translateX(-50%);
+
+    background:
+        radial-gradient(circle at 30% 30%, #7fb2ff, #3b5aa3 60%, #1b2a55);
+
+    box-shadow:
+        0 0 50px rgba(120,170,255,0.25),
+        inset -20px -20px 60px rgba(0,0,0,0.2);
+
+    animation:float 6s ease-in-out infinite;
+}
+
+/* 漂浮 */
+@keyframes float{
+    0%,100%{transform:translateX(-50%) translateY(0);}
+    50%{transform:translateX(-50%) translateY(-10px);}
+}
+
+/* =========================
+   🌙 星球光环
+========================= */
+.ring{
+    position:absolute;
+    width:360px;
+    height:120px;
+    left:50%;
+    bottom:200px;
+    transform:translateX(-50%) rotateX(70deg);
+
+    border:2px solid rgba(160,200,255,0.25);
+    border-radius:50%;
+    filter:blur(1px);
+}
+
+/* =========================
+   🐷 小猪轨道
+========================= */
+.orbit{
+    position:absolute;
+    width:380px;
+    height:380px;
+    left:50%;
+    bottom:140px;
+    transform:translateX(-50%);
+    animation:spin 14s linear infinite;
+}
+
+@keyframes spin{
+    100%{transform:translateX(-50%) rotate(360deg);}
+}
+
+/* =========================
+   🐷 呆萌小猪（核心升级）
+========================= */
 .pig{
     position:absolute;
-    font-size:35px;
-    opacity:0.25;
-    animation:floatPig linear infinite;
+    top:0;
+    left:50%;
+    transform:translateX(-50%);
+    animation:bounce 2.5s ease-in-out infinite;
 }
 
-@keyframes floatPig{
-    from{
-        transform:translateY(110vh) rotate(0deg);
-    }
-    to{
-        transform:translateY(-20vh) rotate(360deg);
-    }
-}
-
-/* 主体 */
-
-.container{
-    position:relative;
-    z-index:2;
+/* 王冠 */
+.crown{
     text-align:center;
-    color:white;
-    animation:fadeIn 2s ease;
+    font-size:22px;
+    margin-bottom:-6px;
+    filter:drop-shadow(0 0 6px rgba(255,255,255,0.4));
 }
 
-h1{
-    font-size:72px;
-    margin-bottom:20px;
-    text-shadow:0 0 20px rgba(255,255,255,0.9);
-    animation:float 3s ease-in-out infinite;
+/* 猪头 */
+.pig-head{
+    width:70px;
+    height:70px;
+    background:#ffb6c8;
+    border-radius:50%;
+    position:relative;
+    box-shadow:0 10px 25px rgba(0,0,0,0.25);
 }
 
-/* 祝福语 */
-
-.subtitle{
-    font-size:28px;
-    margin-bottom:30px;
-    color:white;
-    text-shadow:0 0 10px rgba(255,255,255,0.6);
-}
-
-/* 小猪卡片 */
-
-.pig-card{
-    background:rgba(255,255,255,0.15);
-    backdrop-filter:blur(10px);
-    border:2px solid rgba(255,255,255,0.3);
-    border-radius:30px;
-    padding:40px;
-    box-shadow:0 10px 40px rgba(0,0,0,0.15);
-}
-
-/* 猪猪头像 */
-
-.pig-face{
-    font-size:100px;
-    margin-bottom:20px;
-    animation:bounce 2s infinite;
-}
-
-/* 按钮 */
-
-.btn{
-    margin-top:25px;
-    padding:15px 38px;
-    border:none;
-    border-radius:50px;
-    background:white;
-    color:#ff4f81;
-    font-size:20px;
-    cursor:pointer;
-    font-weight:bold;
-    transition:0.3s;
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
-
-.btn:hover{
-    transform:scale(1.1);
-    background:#fff0f5;
-}
-
-/* 爱心 */
-
-.heart{
+/* 耳朵 */
+.ear{
+    width:16px;
+    height:16px;
+    background:#ff9bb2;
     position:absolute;
-    color:rgba(255,255,255,0.7);
-    animation:rise linear infinite;
-    user-select:none;
+    top:-5px;
+    border-radius:50%;
 }
 
-@keyframes rise{
-    from{
-        transform:translateY(100vh) scale(0.5);
-        opacity:1;
-    }
-    to{
-        transform:translateY(-10vh) scale(1.5);
-        opacity:0;
-    }
+.ear.left{left:6px;transform:rotate(-20deg);}
+.ear.right{right:6px;transform:rotate(20deg);}
+
+/* 眼睛 */
+.eye{
+    width:6px;
+    height:6px;
+    background:#1a1a1a;
+    border-radius:50%;
+    position:absolute;
+    top:24px;
 }
 
-/* 动画 */
+.eye.left{left:18px;}
+.eye.right{right:18px;}
 
+/* 鼻子 */
+.nose{
+    width:22px;
+    height:14px;
+    background:#ff7f9f;
+    border-radius:10px;
+    position:absolute;
+    bottom:12px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+/* 腮红（高级感关键） */
+.blush{
+    width:10px;
+    height:6px;
+    background:rgba(255,120,160,0.35);
+    border-radius:50%;
+    position:absolute;
+    top:32px;
+}
+
+.blush.left{left:6px;}
+.blush.right{right:6px;}
+
+/* 浮动 */
 @keyframes bounce{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-12px);
-    }
+    0%,100%{transform:translateX(-50%) translateY(0);}
+    50%{transform:translateX(-50%) translateY(-10px);}
 }
 
-@keyframes float{
-    0%,100%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-10px);
-    }
+/* =========================
+   🧠 UI
+========================= */
+.ui{
+    position:absolute;
+    top:40px;
+    width:100%;
+    text-align:center;
 }
 
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:scale(0.8);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+.title{
+    font-size:44px;
+    font-weight:bold;
+    text-shadow:0 0 18px rgba(180,220,255,0.4);
+}
+
+.sub{
+    opacity:0.85;
+    font-size:16px;
+    margin-top:5px;
+}
+
+button{
+    margin-top:12px;
+    padding:12px 22px;
+    border:none;
+    border-radius:30px;
+    background:#ffffff;
+    color:#ff4f81;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
 }
 
 </style>
@@ -171,27 +243,42 @@ h1{
 
 <body>
 
-<!-- 猪猪背景 -->
-<div class="pig-bg"></div>
+<div class="nebula"></div>
 
-<!-- 主体 -->
-<div class="container">
+<!-- UI -->
+<div class="ui">
+    <div class="title">🐷 小猪星际生日宇宙</div>
+    <div class="sub">在温柔蓝色宇宙中漂流的生日奇迹</div>
+    <button onclick="alert('💖 小猪给你一个宇宙级拥抱')">
+        领取祝福
+    </button>
+</div>
 
-    <div class="pig-card">
+<!-- 星球 -->
+<div class="planet"></div>
+<div class="ring"></div>
 
-        <h1>🐷 生日快乐 🎂</h1>
+<!-- 小猪 -->
+<div class="orbit">
 
-        <div class="pig-face">
-            🐷
+    <div class="pig">
+
+        <div class="crown">👑</div>
+
+        <div class="pig-head">
+
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+
+            <div class="nose"></div>
+
+            <div class="blush left"></div>
+            <div class="blush right"></div>
+
         </div>
-
-        <div class="subtitle">
-            祝你做世界上最快乐的小猪猪 🐷🎂
-        </div>
-
-        <button class="btn" onclick="showMessage()">
-            点击领取小猪祝福
-        </button>
 
     </div>
 
@@ -199,152 +286,22 @@ h1{
 
 <script>
 
-/* 漂浮小猪 */
+/* ===== 星星生成（统一蓝白色调） ===== */
+for(let i=0;i<120;i++){
+    let s=document.createElement("div");
+    s.className="star";
 
-const pigBg=document.querySelector('.pig-bg');
+    let size=Math.random()*2.5;
 
-for(let i=0;i<30;i++){
+    s.style.width=size+"px";
+    s.style.height=size+"px";
 
-    const pig=document.createElement('div');
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
 
-    pig.className='pig';
+    s.style.opacity=Math.random()*0.8;
 
-    pig.innerHTML='🐷';
-
-    pig.style.left=Math.random()*100+'vw';
-
-    pig.style.fontSize=
-        (25+Math.random()*35)+'px';
-
-    pig.style.animationDuration=
-        (6+Math.random()*8)+'s';
-
-    pig.style.animationDelay=
-        Math.random()*5+'s';
-
-    pigBg.appendChild(pig);
-}
-
-/* 漂浮爱心 */
-
-for(let i=0;i<25;i++){
-
-    const heart=document.createElement('div');
-
-    heart.className='heart';
-
-    heart.innerHTML='💖';
-
-    heart.style.left=Math.random()*100+'vw';
-
-    heart.style.fontSize=
-        (15+Math.random()*30)+'px';
-
-    heart.style.animationDuration=
-        (4+Math.random()*5)+'s';
-
-    heart.style.animationDelay=
-        Math.random()*5+'s';
-
-    document.body.appendChild(heart);
-}
-
-/* 按钮祝福 */
-
-function showMessage(){
-
-    /* 创建亲亲文字 */
-
-    const kiss=document.createElement("div");
-
-    kiss.innerHTML="😘💋 啵啵小猪猪！生日快乐！ 💖";
-
-    kiss.style.position="fixed";
-    kiss.style.left="50%";
-    kiss.style.top="50%";
-    kiss.style.transform="translate(-50%,-50%) scale(0.5)";
-    kiss.style.fontSize="42px";
-    kiss.style.fontWeight="bold";
-    kiss.style.color="white";
-    kiss.style.padding="25px 40px";
-    kiss.style.borderRadius="30px";
-    kiss.style.background="rgba(255,105,180,0.85)";
-    kiss.style.backdropFilter="blur(10px)";
-    kiss.style.boxShadow="0 10px 40px rgba(0,0,0,0.25)";
-    kiss.style.zIndex="9999";
-    kiss.style.opacity="0";
-    kiss.style.transition="all 0.6s ease";
-
-    document.body.appendChild(kiss);
-
-    /* 动画出现 */
-
-    setTimeout(()=>{
-
-        kiss.style.opacity="1";
-        kiss.style.transform=
-            "translate(-50%,-50%) scale(1)";
-
-    },50);
-
-    /* 漂浮亲亲 */
-
-    for(let i=0;i<20;i++){
-
-        const kissEmoji=document.createElement("div");
-
-        kissEmoji.innerHTML=
-            Math.random()>0.5 ? "💋" : "😘";
-
-        kissEmoji.style.position="fixed";
-
-        kissEmoji.style.left="50%";
-        kissEmoji.style.top="50%";
-
-        kissEmoji.style.fontSize=
-            (20+Math.random()*30)+"px";
-
-        kissEmoji.style.zIndex="9999";
-
-        kissEmoji.style.transition="all 2s ease-out";
-
-        document.body.appendChild(kissEmoji);
-
-        const x=(Math.random()-0.5)*700;
-        const y=(Math.random()-0.5)*500;
-
-        setTimeout(()=>{
-
-            kissEmoji.style.transform=
-                `translate(${x}px,${y}px) scale(2)`;
-
-            kissEmoji.style.opacity="0";
-
-        },50);
-
-        setTimeout(()=>{
-
-            kissEmoji.remove();
-
-        },2000);
-    }
-
-    /* 自动消失 */
-
-    setTimeout(()=>{
-
-        kiss.style.opacity="0";
-        kiss.style.transform=
-            "translate(-50%,-50%) scale(0.5)";
-
-        setTimeout(()=>{
-
-            kiss.remove();
-
-        },600);
-
-    },2500);
-
+    document.body.appendChild(s);
 }
 
 </script>
