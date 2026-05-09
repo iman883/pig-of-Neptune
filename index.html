@@ -3,38 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐷 生日快乐</title>
+<title>🎂 生日快乐</title>
 
 <style>
 
-/* ===== 基础 ===== */
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-/* ===== 页面居中 ===== */
+/* ===== 背景 ===== */
 body{
     height:100vh;
-    margin:0;
-
     display:flex;
     justify-content:center;
     align-items:center;
-
     overflow:hidden;
     position:relative;
 
     background:url("https://raw.githubusercontent.com/iman883/pig-of-Neptune/main/pig-space1.png")
     no-repeat center top;
-
     background-size:cover;
 
     font-family:"Microsoft YaHei",sans-serif;
 }
 
-/* ===== 轻遮罩（不挡背景） ===== */
+/* 遮罩 */
 body::before{
     content:"";
     position:absolute;
@@ -44,7 +39,7 @@ body::before{
 }
 
 /* ===== 卡片 ===== */
-.pig-card{
+.card{
     position:relative;
     z-index:2;
 
@@ -58,25 +53,23 @@ body::before{
 
     text-align:center;
 
-    box-shadow:0 10px 40px rgba(0,0,0,0.3);
     color:white;
 }
 
-/* ===== 标题 ===== */
+/* 标题 */
 h1{
     font-size:52px;
     margin-bottom:20px;
-    text-shadow:0 0 20px rgba(255,255,255,0.6);
 }
 
-/* ===== 卡片内唯一一只猪 ===== */
-.pig-face{
-    font-size:100px;
-    margin:15px 0;
+/* 小女孩 */
+.girl{
+    font-size:90px;
+    margin:10px 0;
     animation:bounce 2s infinite;
 }
 
-/* ===== 按钮 ===== */
+/* 按钮 */
 .btn{
     margin-top:20px;
     padding:12px 28px;
@@ -88,14 +81,63 @@ h1{
 
     font-size:16px;
     font-weight:bold;
-
     cursor:pointer;
 }
 
-/* ===== 动画 ===== */
+/* 动画 */
 @keyframes bounce{
     0%,100%{transform:translateY(0);}
     50%{transform:translateY(-10px);}
+}
+
+/* ===== 弹出动画层 ===== */
+.overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,0.4);
+    z-index:999;
+}
+
+/* 动画盒子 */
+.anim-box{
+    text-align:center;
+    color:white;
+    font-size:40px;
+}
+
+/* 猪 */
+.pig{
+    font-size:120px;
+    animation:eat 2s infinite;
+}
+
+/* 蛋糕 */
+.cake{
+    font-size:80px;
+    margin-top:10px;
+}
+
+/* 吃东西动画 */
+@keyframes eat{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-10px) scale(1.1);}
+    100%{transform:translateY(0);}
+}
+
+/* +1岁提示 */
+.age{
+    margin-top:20px;
+    font-size:28px;
+    opacity:0;
+    transition:0.5s;
 }
 
 </style>
@@ -103,19 +145,56 @@ h1{
 
 <body>
 
-<!-- 卡片 -->
-<div class="pig-card">
+<!-- 主卡片 -->
+<div class="card">
 
-    <h1>🎇 生日快乐 🎂</h1>
+    <h1>🐽 生日快乐 🎉</h1>
 
-    <!-- 只保留这一只猪 -->
-    <div class="pig-face">👧</div>
+    <div class="cake">🎂</div>
 
-    <button class="btn" onclick="alert('🎉 生日快乐！祝你天天开心 🐷💖')">
-        点击领取祝福
+    <button class="btn" onclick="startAnim()">
+        吃蛋糕
     </button>
 
 </div>
+
+<!-- 动画层 -->
+<div class="overlay" id="overlay">
+
+    <div class="anim-box">
+
+        <div class="girl">👧</div>
+        <div class="cake">🎂</div>
+
+        <div class="age" id="ageText">🎉 +1岁！变大一岁啦 ( •̀ ω •́ )✧</div>
+
+    </div>
+
+</div>
+
+<script>
+
+function startAnim(){
+
+    const overlay=document.getElementById("overlay");
+    const ageText=document.getElementById("ageText");
+
+    // 显示动画层
+    overlay.style.display="flex";
+
+    // 延迟显示 +1岁
+    setTimeout(()=>{
+        ageText.style.opacity="1";
+    },1200);
+
+    // 3秒后关闭
+    setTimeout(()=>{
+        overlay.style.display="none";
+        ageText.style.opacity="0";
+    },3000);
+}
+
+</script>
 
 </body>
 </html>
