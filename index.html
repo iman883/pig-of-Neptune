@@ -262,6 +262,18 @@ h1{
     width:280px;
     border-radius:15px;
 }
+
+/* =====================
+   emoji雨（关键）
+===================== */
+.fall{
+    position:fixed;
+    top:-50px;
+    font-size:24px;
+    pointer-events:none;
+    z-index:1;
+}
+
 </style>
 </head>
 
@@ -586,6 +598,36 @@ function peekPig(){
 function closePeek(){
     document.getElementById("peek").style.display="none";
 }
+
+/* =====================
+   🌟 emoji雨
+===================== */
+const emojis=["🐷","💖","💕","✨","💗"];
+
+setInterval(()=>{
+
+    let e=document.createElement("div");
+    e.classList.add("fall");
+
+    e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+
+    e.style.left=Math.random()*100+"vw";
+
+    document.body.appendChild(e);
+
+    let duration=3000+Math.random()*3000;
+
+    e.animate([
+        {transform:"translateY(0px)",opacity:1},
+        {transform:"translateY(110vh)",opacity:0}
+    ],{
+        duration:duration,
+        easing:"linear"
+    });
+
+    setTimeout(()=>e.remove(),duration);
+
+},200);
 
 </script>
 
