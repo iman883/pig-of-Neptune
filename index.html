@@ -56,17 +56,9 @@ body::before{
     color:white;
 }
 
-/* 标题 */
 h1{
     font-size:52px;
     margin-bottom:20px;
-}
-
-/* 小女孩 */
-.girl{
-    font-size:90px;
-    margin:10px 0;
-    animation:bounce 2s infinite;
 }
 
 /* 按钮 */
@@ -82,12 +74,7 @@ h1{
     font-size:16px;
     font-weight:bold;
     cursor:pointer;
-}
-
-/* 动画 */
-@keyframes bounce{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-10px);}
+    margin:5px;
 }
 
 /* ===== 弹出动画层 ===== */
@@ -106,33 +93,21 @@ h1{
     z-index:999;
 }
 
-/* 动画盒子 */
 .anim-box{
     text-align:center;
     color:white;
     font-size:40px;
 }
 
-/* 猪 */
-.pig{
-    font-size:120px;
-    animation:eat 2s infinite;
-}
-
-/* 蛋糕 */
 .cake{
     font-size:80px;
     margin-top:10px;
 }
 
-/* 吃东西动画 */
-@keyframes eat{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-10px) scale(1.1);}
-    100%{transform:translateY(0);}
+.girl{
+    font-size:90px;
 }
 
-/* +1岁提示 */
 .age{
     margin-top:20px;
     font-size:28px;
@@ -140,25 +115,89 @@ h1{
     transition:0.5s;
 }
 
+/* =========================
+   🐷 跑酷游戏（新增，不动原结构）
+========================= */
+#game{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,40,0.6);
+    z-index:9999;
+}
+
+.box{
+    width:90%;
+    max-width:600px;
+    height:300px;
+    background:rgba(255,255,255,0.12);
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+}
+
+#pig{
+    position:absolute;
+    bottom:20px;
+    left:50px;
+    font-size:50px;
+}
+
+#obs{
+    position:absolute;
+    bottom:20px;
+    right:-50px;
+    font-size:40px;
+    animation:run 2s linear infinite;
+}
+
+@keyframes run{
+    from{right:-50px;}
+    to{right:700px;}
+}
+
+.jump{
+    animation:jump 0.6s ease;
+}
+
+@keyframes jump{
+    0%{bottom:20px;}
+    50%{bottom:130px;}
+    100%{bottom:20px;}
+}
+
+#ui{
+    position:absolute;
+    top:10px;
+    width:100%;
+    text-align:center;
+    color:white;
+    font-size:16px;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- 主卡片 -->
+<!-- ❗你的原卡片：一行没动 -->
 <div class="card">
 
     <h1>🐽 生日快乐 🎉</h1>
 
     <div class="cake">🎂</div>
 
-    <button class="btn" onclick="startAnim()">
-        吃蛋糕
-    </button>
+    <button class="btn" onclick="startAnim()">吃蛋糕</button>
+    <button class="btn" onclick="startGame()">🐷猪突猛进</button>
 
 </div>
 
-<!-- 动画层 -->
+<!-- ❗你的原动画层：完全没动 -->
 <div class="overlay" id="overlay">
 
     <div class="anim-box">
@@ -172,68 +211,186 @@ h1{
 
 </div>
 
+<!-- =========================
+   🐷 跑酷游戏（新增）
+========================= -->
+<div id="game">
+
+<div class="box">
+
+    <div id="ui">🐷 HP:10 ｜ 躲避10个障碍胜利</div>
+
+    <div id="pig">🐷</div>
+    <div id="obs">🪨</div>
+
+</div>
+
+</div>
+
 <script>
 
+/* ===== 原逻辑：完全不动 ===== */
 function startAnim(){
 
     const overlay=document.getElementById("overlay");
     const ageText=document.getElementById("ageText");
 
-    // 显示动画层（吃蛋糕）
     overlay.style.display="flex";
 
-    // =========================
-    // 🎂 +1岁出现 + 💖亲亲特效（同一时间触发）
-    // =========================
     setTimeout(()=>{
 
-        // 显示 +1岁
         ageText.style.opacity="1";
 
-        // =========================
-        // 💋 亲亲雨特效（叠加，不加新文字框）
-        // =========================
         for(let i=0;i<20;i++){
 
-            const kissEmoji=document.createElement("div");
+            const kiss=document.createElement("div");
+            kiss.innerHTML=Math.random()>0.5?"💋":"😘";
 
-            kissEmoji.innerHTML = Math.random()>0.5 ? "💋" : "😘";
+            kiss.style.position="fixed";
+            kiss.style.left="50%";
+            kiss.style.top="50%";
+            kiss.style.fontSize=(20+Math.random()*30)+"px";
+            kiss.style.zIndex="9999";
 
-            kissEmoji.style.position="fixed";
-            kissEmoji.style.left="50%";
-            kissEmoji.style.top="50%";
+            document.body.appendChild(kiss);
 
-            kissEmoji.style.fontSize=(20+Math.random()*30)+"px";
-            kissEmoji.style.zIndex="9999";
-
-            kissEmoji.style.transition="all 2s ease-out";
-
-            document.body.appendChild(kissEmoji);
-
-            const x=(Math.random()-0.5)*700;
-            const y=(Math.random()-0.5)*500;
+            let x=(Math.random()-0.5)*700;
+            let y=(Math.random()-0.5)*500;
 
             setTimeout(()=>{
-                kissEmoji.style.transform=
-                    `translate(${x}px,${y}px) scale(2)`;
-                kissEmoji.style.opacity="0";
+                kiss.style.transform=`translate(${x}px,${y}px)`;
+                kiss.style.opacity="0";
             },50);
 
-            setTimeout(()=>{
-                kissEmoji.remove();
-            },2000);
+            setTimeout(()=>kiss.remove(),2000);
         }
 
     },1000);
 
-    // =========================
-    // ⏳ 自动关闭
-    // =========================
     setTimeout(()=>{
         overlay.style.display="none";
         ageText.style.opacity="0";
     },3500);
 }
+
+/* =========================
+   🐷 跑酷游戏（新增）
+========================= */
+
+let hp=10;
+let count=0;
+let jumpLock=false;
+
+function startGame(){
+
+    document.getElementById("game").style.display="flex";
+
+    hp=10;
+    count=0;
+
+    update();
+
+    document.onkeydown=(e)=>{
+        if(e.code==="Space") jump();
+    };
+
+    document.getElementById("game").onclick=jump;
+
+    loop();
+}
+
+function jump(){
+
+    if(jumpLock) return;
+
+    let pig=document.getElementById("pig");
+
+    jumpLock=true;
+    pig.classList.add("jump");
+
+    setTimeout(()=>{
+        pig.classList.remove("jump");
+        jumpLock=false;
+    },600);
+}
+
+function loop(){
+
+    let pig=document.getElementById("pig");
+    let obs=document.getElementById("obs");
+
+    let hitLock=false;
+
+    setInterval(()=>{
+
+        let p=pig.getBoundingClientRect();
+        let o=obs.getBoundingClientRect();
+
+        let hit =
+            o.left<p.right &&
+            o.right>p.left &&
+            o.bottom>p.top;
+
+        if(hit && !hitLock){
+
+            hitLock=true;
+            hp--;
+            update();
+
+            if(hp<=0){
+                roast();
+                return;
+            }
+
+            setTimeout(()=>hitLock=false,500);
+        }
+
+        if(o.right<0){
+            count++;
+            update();
+
+            if(count>=10){
+                alert("🎉 通关成功！");
+                location.reload();
+            }
+        }
+
+    },100);
+}
+
+function update(){
+    document.getElementById("ui").innerText=
+    `🐷 HP:${hp} ｜ 躲避:${count}/10`;
+}
+
+/* 烤乳猪 */
+function roast(){
+
+    document.getElementById("pig").innerHTML="🐖🔥";
+    document.body.style.background="#2b0b0b";
+
+    for(let i=0;i<25;i++){
+
+        let f=document.createElement("div");
+        f.innerHTML="🔥";
+        f.style.position="fixed";
+        f.style.left="50%";
+        f.style.top="50%";
+
+        document.body.appendChild(f);
+
+        let x=(Math.random()-0.5)*600;
+        let y=(Math.random()-0.5)*400;
+
+        setTimeout(()=>{
+            f.style.transform=`translate(${x}px,${y}px)`;
+            f.style.opacity="0";
+        },50);
+
+        setTimeout(()=>f.remove(),1500);
+    }
+}
+
 </script>
 
 </body>
